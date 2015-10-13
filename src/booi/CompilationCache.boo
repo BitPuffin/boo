@@ -84,7 +84,7 @@ class CompilationCache:
                     Sources[parts[1]] = DateTime.FromFileTimeUtc(timestamp)
                 elif parts[0] == 'reference':
                     try:
-                        token = System.Guid.Parse(parts[2])
+                        token = System.Guid(parts[2])
                         References[parts[1]] = token
                     except:
                         timestamp = long.Parse(parts[2])

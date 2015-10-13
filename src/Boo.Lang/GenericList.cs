@@ -34,7 +34,7 @@ using Boo.Lang.Runtime;
 
 namespace Boo.Lang
 {
-	public delegate TResult Function<in T1, out TResult>(T1 arg);
+	public delegate TResult Function<T1, TResult>(T1 arg);
 
 	[Serializable]
 	public class List<T> : IList<T>, IList, IEquatable<List<T>>

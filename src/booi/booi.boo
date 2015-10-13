@@ -192,7 +192,8 @@ class Program:
         if 1 == len(_params.Input) and not _params.Defines.ContainsKey('MAIN'):
             _params.Defines.Add('MAIN', '')
 
-        sw.Restart()
+        sw = System.Diagnostics.Stopwatch()
+        sw.Start()
         generated = Compile()
         return DefaultErrorCode if generated is null
         sw.Stop()
@@ -203,7 +204,7 @@ class Program:
             for asmref in _params.References:
                 asm = asmref.Assembly
                 # Skip dynamically generated assemblies
-                continue if asm.IsDynamic
+                continue if asm.ManifestModule is System.Reflection.Emit.ModuleBuilder #asm.IsDynamic
 
                 try:
                     asmfile = Path.GetFileName(asm.Location)
@@ -310,7 +311,7 @@ class Program:
         assemblies = [asmfile]
         for asmref as IAssemblyReference in _params.References:
             asm = asmref.Assembly
-            if asm.IsDynamic:
+            if asm.ManifestModule is System.Reflection.Emit.ModuleBuilder /*asm.IsDynamic*/:
                 assemblies.Add(asmref.Name + '.dll')
                 continue
 

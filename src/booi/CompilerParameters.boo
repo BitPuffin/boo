@@ -43,7 +43,7 @@ class CompilerParameters(BooCompilerParameters):
         for i in range(len(parts), 0):
             paths.Add(Path.Combine(
                 join(parts[:i], '.'),
-                Path.Combine(*parts[i:])
+                PathCombineArray(parts[i:])
             ))
 
         for libpath in LibPaths:
@@ -206,3 +206,10 @@ class CompilerParameters(BooCompilerParameters):
         Context.TraceLeave('No directory found to map {0}', asmname)
         return null
 
+  static def PathCombineArray(arr as (string)):
+    return null if arr is null or len(arr) == 0
+    return arr[0] if len(arr) == 1
+    var path = Path.Combine(arr[0], arr[1])
+    for i in range(2, len(arr)):
+      path = Path.Combine(path, arr[i])
+    return path
